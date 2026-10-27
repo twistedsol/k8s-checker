@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Secrets: never commit these
+.env
+*.pem
+*.key
+credentials*
+.aws/
+
+# Real log files can contain account IDs and IPs, so keep them local
+logs/
+*.json.gz
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
