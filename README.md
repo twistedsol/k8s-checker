@@ -62,7 +62,15 @@ The tests cover the YAML reader, multi-document files, each rule and its edges, 
 
 I used AI to help write the code and tests. I reused the small YAML reader from my docker-compose checker and added multi-document support. I ran everything myself and checked the sample results by hand. One test failed at first because I had forgotten to copy an error class across, which is exactly what tests are for.
 
-## Limits
+## What I learned
+
+- A Kubernetes setting that is not written in the file is often the dangerous one. If `allowPrivilegeEscalation` or `runAsNonRoot` is missing, the default is not safe.
+- Container settings beat pod-level settings, so a checker has to read both and decide which one wins.
+- A Kubernetes file can hold several documents separated by `---`. I had to keep the line numbers correct for each one.
+- My tests caught a real bug: I had copied the reader code but left out its error class. Without tests I would have found out only when a user hit a missing file.
+- "Not set in this file" is not the same as "not set in the cluster", so the README lists that honestly under Limits.
+-
+- ## Limits
 
 - It reads files only. It does not know what is running in a cluster, or what policies, admission controllers or namespaces add on top.
 - It does not support Helm templates (`{{ }}`), Kustomize overlays, YAML anchors or merge keys. It stops with an error instead of guessing.
