@@ -74,3 +74,5 @@ I used AI to help write the code and tests. I reused the small YAML reader from 
 - RBAC checks (roles with `*` permissions, cluster-admin bindings).
 - NetworkPolicy checks (a namespace with no policy).
 - Check `automountServiceAccountToken` and liveness probes.
+
+- 
