@@ -1,0 +1,47 @@
+# Made-up example: badly written Kubernetes manifests.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shop-web
+  template:
+    metadata:
+      labels:
+        app: shop-web
+    spec:
+      hostNetwork: true
+      containers:
+        - name: web
+          image: nginx:latest
+          securityContext:
+            privileged: true
+          env:
+            - name: DB_PASSWORD
+              value: hunter2
+            - name: LOG_LEVEL
+              value: info
+      volumes:
+        - name: docker
+          hostPath:
+            path: /var/run/docker.sock
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-tools
+spec:
+  containers:
+    - name: tools
+      image: example/tools:2.1
+      securityContext:
+        runAsUser: 0
+        capabilities:
+          add: ["SYS_ADMIN"]
+  volumes:
+    - name: logs
+      hostPath:
+        path: /var/log
